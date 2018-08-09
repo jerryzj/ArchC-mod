@@ -83,7 +83,7 @@ void ac_tlm2_port::read(ac_ptr buf, uint32_t address, int wordsize,sc_core::sc_t
     printf("\n\nAC_TLM2_PORT READ: command-->%d address-->%ld",tlm::TLM_READ_COMMAND, address);
     #endif
 
-    (*this)->b_transport(*payload, time_info);
+    i_socket->b_transport(*payload, time_info);
 
     uint8_t data8;
     uint16_t data16;
@@ -162,7 +162,7 @@ void ac_tlm2_port::read(ac_ptr buf, uint32_t address,
                 /**/
 
 
-                (*this)->b_transport(*payload, time_info); 
+                i_socket->b_transport(*payload, time_info); 
                 
                 for (int j = 0; (i < n_words) && (j < 4); j++, i++) {
                     (buf.ptr8)[i] = ((uint8_t*)p)[j];
@@ -183,7 +183,7 @@ void ac_tlm2_port::read(ac_ptr buf, uint32_t address,
                 payload->set_streaming_width((const unsigned int)procId);
                 /**/
 
-                (*this)->b_transport(*payload, time_info); 
+                i_socket->b_transport(*payload, time_info); 
                 
                 for (int j = 0; (i < n_words) && (j < 2); j++, i++) {
                     buf.ptr16[i] = ((uint16_t*)p)[j];
@@ -204,7 +204,7 @@ void ac_tlm2_port::read(ac_ptr buf, uint32_t address,
                 payload->set_streaming_width((const unsigned int)procId);
                 /**/
 
-                (*this)->b_transport(*payload, time_info);      
+                i_socket->b_transport(*payload, time_info);      
 
                 uint32_t *T = reinterpret_cast<uint32_t*>(p);
                 buf.ptr32[i]= T[0];
@@ -249,13 +249,13 @@ void ac_tlm2_port::write(ac_ptr buf, uint32_t address, int wordsize,sc_core::sc_
 
 
 
-        (*this)->b_transport(*payload, time_info); 
+        i_socket->b_transport(*payload, time_info); 
         
         payload->set_command(tlm::TLM_WRITE_COMMAND);
         
         ((uint8_t*)p)[0] = *(buf.ptr8);
 
-        (*this)->b_transport(*payload, time_info);  
+        i_socket->b_transport(*payload, time_info);  
       break;
       
       case 16:
@@ -271,7 +271,7 @@ void ac_tlm2_port::write(ac_ptr buf, uint32_t address, int wordsize,sc_core::sc_
         /**/
 
 
-        (*this)->b_transport(*payload, time_info); 
+        i_socket->b_transport(*payload, time_info); 
 
         payload->set_command(tlm::TLM_WRITE_COMMAND);
         
@@ -280,7 +280,7 @@ void ac_tlm2_port::write(ac_ptr buf, uint32_t address, int wordsize,sc_core::sc_
 
         //((uint16_t*)p)[0] = *(buf.ptr16);
 
-        (*this)->b_transport(*payload, time_info);  
+        i_socket->b_transport(*payload, time_info);  
       }
       break;
  
@@ -304,7 +304,7 @@ void ac_tlm2_port::write(ac_ptr buf, uint32_t address, int wordsize,sc_core::sc_
 
 
         payload->set_data_ptr(p);      
-        (*this)->b_transport(*payload, time_info); 
+        i_socket->b_transport(*payload, time_info); 
       } 
       break;
 
@@ -352,7 +352,7 @@ void ac_tlm2_port::write(ac_ptr buf, uint32_t address,
     printf("\nAC_TLM2_PORT WRITE: n_words--> %d  wordsize-->%d  i--> %d command-->  data-->%d",n_words, wordsize,i, payload->get_command(), *((uint32_t*)p));
     #endif
 
-    (*this)->b_transport(*payload, time_info);  
+    i_socket->b_transport(*payload, time_info);  
   }
 }
 

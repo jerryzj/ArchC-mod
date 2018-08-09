@@ -45,12 +45,13 @@
 
 // SystemC includes
 #include <systemc.h>
+#include <tlm.h>
+#include "tlm_utils/simple_initiator_socket.h"
 
 // ArchC includes
 #include "ac_inout_if.H"
 #include "ac_tlm_protocol.H"
 #include "ac_tlm_dev_id.H"
-
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -67,8 +68,7 @@ using std::string;
 //////////////////////////////////////////////////////////////////////////////
 
 /// ArchC TLM initiator port class.    
-class ac_tlm2_port : public sc_port<ac_tlm2_blocking_transport_if>,
-                     public ac_inout_if,
+class ac_tlm2_port : public ac_inout_if,
                      public ac_tlm_dev_id {
 
 private:
@@ -79,6 +79,7 @@ public:
   string name;
   uint32_t size;
 
+  tlm_utils::simple_initiator_socket<ac_tlm2_port> i_socket;
 
 
   /** 
