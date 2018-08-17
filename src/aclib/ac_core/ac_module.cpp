@@ -62,7 +62,7 @@ std::list<ac_module*> ac_module::mods_list;
 ac_module::ac_module() : sc_module(sc_gen_unique_name("ac_module")),
 			 mod_id(next_mod_id++),
 			 ac_exit_status(0){
-  ac_qk.set_global_quantum( sc_time(100, SC_NS) );
+  ac_qk.set_global_quantum( sc_time(1, SC_NS) );
   ac_qk.reset();
   module_period_ns=5;  //200 MHz = 5ns
   this_mod = mods_list.insert(mods_list.end(), this);
@@ -73,7 +73,7 @@ ac_module::ac_module() : sc_module(sc_gen_unique_name("ac_module")),
 ac_module::ac_module(sc_module_name nm) : sc_module(nm),
 			 mod_id(next_mod_id++),
 			 ac_exit_status(0){
-  ac_qk.set_global_quantum( sc_time(100, SC_NS) );
+  ac_qk.set_global_quantum( sc_time(1, SC_NS) );
   ac_qk.reset();
   module_period_ns=5;  //200 MHz = 5ns
   this_mod = mods_list.insert(mods_list.end(), this);
